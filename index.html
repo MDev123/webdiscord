@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Discord Webhook Sender</title>
+    <style>
+        /* Discord-themed styles */
+        body {
+            background-color: #36393f;
+            color: #ffffff;
+            font-family: sans-serif;
+            font-size: 16px;
+        }
+
+        h1 {
+            color: #7289da;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], textarea {
+            background-color: #202225;
+            border: none;
+            border-radius: 3px;
+            color: #ffffff;
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 50%;
+        }
+
+        button {
+            background-color: #7289da;
+            border: none;
+            border-radius: 3px;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        button:hover {
+            background-color: #677bc4;
+        }
+
+        .preview {
+            background-color: #2f3136;
+            border-radius: 3px;
+            padding: 10px;
+        }
+
+        .preview h2 {
+            color: #7289da;
+        }
+
+        .preview p {
+            color: #b9bbbe;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Discord Webhook Sender</h1>
+
+    <form id="discord-form">
+        <label for="webhook-url">Webhook URL:</label>
+        <input type="text" id="webhook-url" name="webhook-url">
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message"></textarea>
+
+        <label for="embed-title">Embed Title:</label>
+        <input type="text" id="embed-title" name="embed-title">
+
+        <label for="embed-description">Embed Description:</label>
+        <textarea id="embed-description" name="embed-description"></textarea>
+
+        <label for="embed-field1-name">Embed Field 1 Name:</label>
+        <input type="text" id="embed-field1-name" name="embed-field1-name">
+
+        <label for="embed-field1-value">Embed Field 1 Value:</label>
+        <input type="text" id="embed-field1-value" name="embed-field1-value">
+
+        <label for="embed-field2-name">Embed Field 2 Name:</label>
+        <input type="text" id="embed-field2-name" name="embed-field2-name">
+
+        <label for="embed-field2-value">Embed Field 2 Value:</label>
+        <input type="text" id="embed-field2-value" name="embed-field2-value">
+
+        <button type="submit">Send</button>
+    </form>
+
+    <div class="preview">
+        <h2>Preview</h2>
+        <p>No preview available.</p>
+    </div>
+
+    <script>
+        const form = document.getElementById('discord-form');
+        const preview = document.querySelector('.preview');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const webhookUrl = document.getElementById('webhook-url').value;
+            const message = document.getElementById('message').value;
+            const embedTitle = document.getElementById('embed-title').value;
+            const embedDescription = document.getElementById('embed-description').value;
+            const embedField1Name = document.getElementById('embed-field1-name').value;
+            const embedField1Value = document.getElementById('embed-field1-value').value;
+            const embedField2Name = document.getElementById('embed-field2-name').value;
+            const embedField2Value = document.getElementById('embed-field2-value').value;
+
+            const data = {
+                content: message,
+                embeds: [
+                    {
+                        title: embedTitle,
+                        description: embedDescription,
+                        fields: [
+                            {
+                                name: embedField1Name,
+                                value: embedField1Value,
+                                inline: true
+                            },
+                            {
+                                name: embedField2Name,
+                                value: embedField2Value,
+                                inline: true
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(result => {
+                preview.innerHTML = `
+                    <h2>Preview</h2>
+                    <p>Message sent successfully!</p>
+                `;
+            })
+            .catch(error => {
+                preview.innerHTML = `
+                    <h2>Preview</h2>
+                    <p>Error: ${error.message}, message might still have been sent.</p>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
