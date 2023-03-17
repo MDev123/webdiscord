@@ -1,0 +1,38 @@
+.alert-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.alert {
+    background-color: #588fff;
+    border-radius: 8px;
+    color: #fff;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.2);
+    margin: 8px;
+    width: 400px;
+    max-width: 90%;
+    display: none;
+}
+
+.alert .title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 8px;
+}
+
+.alert .message {
+    font-size: 16px;
+}
+.alert .close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+}
