@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Discord Webhook Sender</title>
+    <link rel="stylesheet" href="styldxe.css">
     <style>
         /* Discord-themed styles */
         body {
@@ -32,7 +33,7 @@
         }
 
         button {
-            background-color: #7289da;
+            background-color: #7289DA;
             border: none;
             border-radius: 3px;
             color: #ffffff;
@@ -96,7 +97,7 @@
         <h2>Preview</h2>
         <p>No preview available.</p>
     </div>
-
+    <script src="/discordtypealert.js"></script>
     <script>
         const form = document.getElementById('discord-form');
         const preview = document.querySelector('.preview');
@@ -144,11 +145,13 @@
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    showDiscordAlert('Error', 'Read preview for more information.');
+                    throw new Error('Network response was not ok. Try again?');
                 }
                 return response.json();
             })
             .then(result => {
+                showDiscordAlert('Alert Title', 'This is an example alert message. hi');
                 preview.innerHTML = `
                     <h2>Output</h2>
                     <p>Message sent successfully!</p>
