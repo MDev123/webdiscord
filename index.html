@@ -118,6 +118,7 @@
                     {
                         title: embedTitle,
                         description: embedDescription,
+                        color: 0x00FFFF,
                         fields: [
                             {
                                 name: embedField1Name,
@@ -149,13 +150,13 @@
             })
             .then(result => {
                 preview.innerHTML = `
-                    <h2>Preview</h2>
+                    <h2>Output</h2>
                     <p>Message sent successfully!</p>
                 `;
             })
             .catch(error => {
                 preview.innerHTML = `
-                    <h2>Preview</h2>
+                    <h2>Output</h2>
                     <p>Error: ${error.message}, message might still have been sent.</p>
                 `;
             });
